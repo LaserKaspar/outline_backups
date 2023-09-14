@@ -13,7 +13,7 @@ const DATE = formatDate(new Date()); // YY-mm-dd_HH-MM-SS
 
 // Start Export
 (async () => {
-    const collectionUrl = process.env.FILES == "all" ? "/api/collections.export_all" : "/api/collections.export";
+    const collectionUrl = process.env.COLLECTION == "all" ? "/api/collections.export_all" : "/api/collections.export";
     const getExport = await fetch(process.env.OUTLINE_URL + collectionUrl, {
         method: "POST",
         headers: {
@@ -22,12 +22,12 @@ const DATE = formatDate(new Date()); // YY-mm-dd_HH-MM-SS
         },
         body: JSON.stringify({
             "format": process.env.FORMAT,
-            "id": process.env.FILES
+            "id": process.env.COLLECTION
         })
     });
 
     if(getExport.status == 400) {
-        console.log("Bad Request, did you specify the correct .env.FILES? " + process.env.FILES);
+        console.log("Bad Request, did you specify the correct .env.COLLECTION? " + process.env.COLLECTION);
         return
     }
     const exported = (await getExport.json()).data;
